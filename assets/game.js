@@ -6,9 +6,9 @@ var baldBull = {
     name: 'Bald Bull',
     health: 100,
     attacks: {
-        slap: 1,
-        punch: 5,
-        kick: 10,
+        jab: 1,
+        hook: 5,
+        special: 10,
 
     },
     mobility: 50,
@@ -31,19 +31,19 @@ var baldBull = {
 // }
 
 var items = [
-    {   name: 'shield',
-        modifier: .5,
-        description: 'Great Blocker',
-        amount: 1,
-    },
-    {   name: 'sword',
+    {   name: 'Hype Up',
         modifier: 2,
-        description: 'sharp sword',
+        description: 'you are getting Hyped',
         amount: 1,
     },
-    {   name: 'hammer',
+    {   name: 'Star',
         modifier: 3,
-        description: 'like mario had.',
+        description: 'Power up!',
+        amount: 1,
+    },
+    {   name: 'brass Knuckles',
+        modifier: 3,
+        description: 'Very Illegal',
         amount: 1,
     }
 ]
@@ -78,38 +78,46 @@ console.log(mod);
 }
 
 function koCheck(){
+    updateBar(baldBull.health);
     if (baldBull.health <= 0){
         console.log('KOED')
         baldBull.ko = true
         document.getElementById('target').innerHTML = `<img src="assets/pictures/tko.jpg" alt="">`
     }
+    if (baldBull.health > 0 && baldBull.ko){
+        document.getElementById('target').innerHTML = `<img src="assets/pictures/baldbull.jpg" alt="">`
+        baldBull.ko = false;
+    }
 }
 
-function slap() {
+function jab() {
     if (!baldBull.ko){
-    baldBull.health -=(baldBull.attacks.slap * addMods()) ;
+    baldBull.health -=(baldBull.attacks.jab * addMods()) ;
     baldBull.hits++;
+    // updateBar(baldBull.health);
     update();
     koCheck()
 }
 };
 
-function punch() {
+function hook() {
     if (!baldBull.ko){
         console.log('checked ko')
-    baldBull.health -=(baldBull.attacks.punch * addMods()) ;
+    baldBull.health -=(baldBull.attacks.hook * addMods()) ;
     baldBull.hits++;
+    // updateBar(baldBull.health);
     update();
     koCheck()
 }
 };
 
-function kick() {
+function special() {
     if (!baldBull.ko){
-    baldBull.health -=(baldBull.attacks.kick * addMods()) ;
+    baldBull.health -=(baldBull.attacks.special * addMods()) ;
     baldBull.hits++;
+    // updateBar(baldBull.health);
     update();
-    koCheck()
+    koCheck();
 }
 };
 
@@ -121,8 +129,11 @@ function update() {
 
     elemName.innerText = baldBull.name;
     elemHits.innerText = baldBull.hits + '';
+    if (baldBull.health > 0){
     elemHealth.innerText = baldBull.health + '';
-
+}else {
+    elemHealth.innerText = '0'
+}
 
 };
 
@@ -131,11 +142,35 @@ function drawItems(arr){
    var template= ''
     for (var i=0; i< arr.length; i++){
         if(items[i].amount>0){
-            template +=`<button onclick="giveItem(${i})">${arr[i].name}</button>`
+            template +=`<button class = "btn btn-warning" onclick="giveItem(${i})">${arr[i].name}</button>`
         }
     }
     elemItem.innerHTML = template
 
+}
+
+function updateBar (percent){
+    var elemBar = document.getElementById('healthBar');
+    if (percent>0){
+    elemBar.style.width = percent + '%';
+}
+if (percent <= 0){
+    elemBar.style.width ='0%';
+}
+}
+
+function resetGame(){
+    baldBull.health = 100;
+    baldBull.hits = 0;
+    baldBull.items = [];
+
+    for (let i=0; i<items.length; i++)    {
+        items[i].amount = 1;
+    }
+    drawItems(items);
+    update();
+    updateBar(baldBull.health);
+    koCheck();
 }
 
 drawItems(items);
