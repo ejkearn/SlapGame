@@ -53,6 +53,7 @@ function giveItem(num) {
     baldBull.items.push(items[num]);
     items[num].amount--;
     drawItems(items);
+    drawItemGui(items[num].name);
     }
 }
 
@@ -137,12 +138,26 @@ function update() {
 
 };
 
+function drawItemGui(x){
+    var template = ""
+    var elemX = document.getElementById('itemgui');
+    template += ` ${x},`;
+    elemX.innerText += template;
+
+}
+
+function resetItemGui(){
+    var template = "using:"
+    var elemX = document.getElementById('itemgui');
+ 
+    elemX.innerText = template;
+}
 function drawItems(arr){
     var elemItem = document.getElementById('itemButtons')
    var template= ''
     for (var i=0; i< arr.length; i++){
         if(items[i].amount>0){
-            template +=`<button class = "btn btn-warning" onclick="giveItem(${i})">${arr[i].name}</button>`
+            template +=`<button class = "btn btn-warning" onclick="giveItem(${i})">${arr[i].name} : 1</button>`
         }
     }
     elemItem.innerHTML = template
@@ -167,6 +182,7 @@ function resetGame(){
     for (let i=0; i<items.length; i++)    {
         items[i].amount = 1;
     }
+    resetItemGui();
     drawItems(items);
     update();
     updateBar(baldBull.health);
