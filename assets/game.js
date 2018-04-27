@@ -17,18 +17,6 @@ var baldBull = {
     ko: false,
 }
 
-// var item = function (name, modifier, description) {
-//     this.name = name;
-//     this.modifier = modifier;
-//     this, description = description;
-
-// }
-
-// var items = {
-//     shield: new item('shield', .5, 'Great Blocker!'),
-//     sword: new item('sword', 2, 'sharp sword'),
-//     nuke: new item('nuke', 500, 'please dont use...')
-// }
 
 var items = [
     {
@@ -60,17 +48,7 @@ function giveItem(num) {
     }
 }
 
-// function giveShield() {
-//     baldBull.items.push(items.shield);
-// }
 
-// function giveSword() {
-//     baldBull.items.push(items.sword);
-// }
-
-// function giveNuke() {
-//     baldBull.items.push(items.nuke);
-// }
 
 function addMods() {
     var mod = 1
