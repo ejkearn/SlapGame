@@ -20,6 +20,8 @@ var baldBull = {
 }
 
 // This could also be a dictionary of items(similar to the attacks objects on baldBull), but it will function just fine as is.
+// This could be desirable as an array indexs may not stay the same while you manipulate data on them where as an object you 
+// will know the associated index(property name).
 var items = [
     {
         name: 'Hype Up',
