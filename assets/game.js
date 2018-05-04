@@ -2,6 +2,8 @@
 // var health = 100;
 // var charName = "Bald Bull";
 // var hits = 0
+
+// See if you can convert this to use a constructor for a Target/Character/Player
 var baldBull = {
     name: 'Bald Bull',
     health: 100,
@@ -17,7 +19,9 @@ var baldBull = {
     ko: false,
 }
 
-
+// This could also be a dictionary of items(similar to the attacks objects on baldBull), but it will function just fine as is.
+// This could be desirable as an array indexs may not stay the same while you manipulate data on them where as an object you 
+// will know the associated index(property name).
 var items = [
     {
         name: 'Hype Up',
@@ -39,6 +43,7 @@ var items = [
     }
 ]
 
+// I like the amount property added to items that you utilize in this function to limit the items given.
 function giveItem(num) {
     if (items[num].amount > 0) {
         baldBull.items.push(items[num]);
@@ -59,6 +64,8 @@ function addMods() {
     return mod;
 }
 
+
+// Moving this functionality out of update is a good move to keep your functions cleaner
 function koCheck() {
     updateBar(baldBull.health);
     if (baldBull.health <= 0) {
@@ -72,8 +79,13 @@ function koCheck() {
     }
 }
 
+//All of these functions are doing the same thing essentially except for which attack they are referencing. You could
+// combine them into one function attack(attackName) EX: attack("jab") and then line 87 would use the name the 
+// function takes in to reference the specific attack. Removes 2 functions that are the same.
 function jab() {
+// function attack(attackName) {
     if (!baldBull.ko) {
+        // baldBull.health -= (baldBull.attacks[attackName] * addMods());        
         baldBull.health -= (baldBull.attacks.jab * addMods());
         baldBull.hits++;
         // updateBar(baldBull.health);
@@ -119,6 +131,7 @@ function update() {
 
 };
 
+// Good ideato have visuals to let your player know what is equipped
 function drawItemGui(x) {
     var template = ""
     var elemX = document.getElementById('itemgui');
@@ -155,6 +168,7 @@ function updateBar(percent) {
     }
 }
 
+// Good use of multiple functions being utilized by a manager function.
 function resetGame() {
     baldBull.health = 100;
     baldBull.hits = 0;
